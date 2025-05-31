@@ -1,0 +1,71 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+}
+
+.navbar__list {
+    display: flex;
+    justify-content: center; /* Центрирование элементов */
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1200px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar__item {
+    margin: 0 1.5rem; /* Увеличенные отступы между пунктами */
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.navbar__link {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem; /* Увеличенный размер текста */
+    font-weight: 500;
+    padding: 1rem 0.5rem;
+    display: block;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+/* Эффекты при наведении */
+.navbar__link:hover {
+    color: #ffde7d; /* Желтый при наведении */
+}
+
+.navbar__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0.8rem;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ffde7d;
+    transition: width 0.3s ease;
+}
+
+.navbar__link:hover::after {
+    width: 100%;
+}
+
+/* Анимация при наведении на элемент */
+.navbar__item:hover {
+    transform: translateY(-2px);
+}
+
+/* Активный пункт меню */
+.navbar__item.active .navbar__link {
+    color: #ffde7d;
+    font-weight: 600;
+}
+
+.navbar__item.active .navbar__link::after {
+    width: 100%;
+}
