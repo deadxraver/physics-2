@@ -8,7 +8,7 @@ const PointInfo = ({ pointData }) => {
     }
 
     return (
-        <div style={{ padding: '20px', border: '1px solid #ccc', margin: '20px' }}>
+        <div style={{ width: '600px',height: '240px', padding: '20px', border: '1px solid #ccc' }}>
             <h3>Информация о точке:</h3>
             <p>Координаты (пикс): ({pointData.x.toFixed(0)}, {pointData.y.toFixed(0)})</p>
             <p>Магнитная индукция |B|: {pointData.B_magnitude.toExponential(2)} Тл</p>

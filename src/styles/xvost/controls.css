@@ -15,7 +15,7 @@
     flex-direction: column; /* Элементы в столбце: label, input, span */
     align-items: center; /* Центрируем по горизонтали */
     margin-bottom: 30px; /* Отступ снизу для разделения слайдеров */
-    margin-top: 70px;
+    margin-top: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;

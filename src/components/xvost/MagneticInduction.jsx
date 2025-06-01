@@ -21,7 +21,8 @@ export default function MagneticInduction() {
 
     return (<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <h1>Визуализация магнитного поля</h1>
-        <div style={{display: 'flex'}}>
+        <div style={{display: 'flex', padding:'10px'}}>
+            <div>
             <Controls
                 h1={h1} setH1={setH1}
                 h2={h2} setH2={setH2}
@@ -30,6 +31,8 @@ export default function MagneticInduction() {
                 I1={I1} setI1={setI1}
                 I2={I2} setI2={setI2}
             />
+            <PointInfo pointData={selectedPointData}></PointInfo>
+            </div>
             <FieldCanvas
                 h1={h1} h2={h2}
                 mu1={mu1} mu2={mu2}
@@ -37,6 +40,5 @@ export default function MagneticInduction() {
                 onPointClick={handlePointClick}
             />
         </div>
-        <PointInfo pointData={selectedPointData}/>
     </div>);
 }
