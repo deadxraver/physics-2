@@ -26,7 +26,7 @@ export default function Contact() {
 
             </div>
             <br/>
-            <div style={{ textAlign: "center", fontWeight: "bolder", fontSize: "24px" }}><a href="https://github.com/deadxraver/physics-2">исходный код</a></div>
+            <div style={{ textAlign: "center", fontWeight: "bolder", fontSize: "24px" }}><a href="https://github.com/deadxraver/physics-2" target="_blank">исходный код</a></div>
 
         </div>
     );
