@@ -39,6 +39,11 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         ctx.stroke();
     };
 
+    // Новый useEffect для сброса данных клика при изменении параметров слайдеров
+    useEffect(() => {
+        setClickedPointData(null); // Сбрасываем данные о клике
+    }, [h1, h2, mu1, mu2, I1, I2]); // Зависимости: любые изменения параметров слайдеров
+
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -157,7 +162,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
                 ctx.arc(x, y, 5, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Рисуем B1 (например, зеленый)
+                // Рисуем B1 (например, синий)
                 const B1_endX = x + B1x_phys * vectorDisplayScale;
                 const B1_endY = y + B1y_phys * vectorDisplayScale;
                 drawArrow(ctx, x, y, B1_endX, B1_endY, 'blue', 2);
@@ -166,7 +171,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
                 ctx.fillText('B1', B1_endX + 5, B1_endY - 5);
 
 
-                // Рисуем B2 (например, синий)
+                // Рисуем B2 (например, малиновый)
                 const B2_endX = x + B2x_phys * vectorDisplayScale;
                 const B2_endY = y + B2y_phys * vectorDisplayScale;
                 drawArrow(ctx, x, y, B2_endX, B2_endY, 'deeppink', 2);
