@@ -1,6 +1,6 @@
 const EjsEmbed = () => {
     return (
-      <div style={{ marginTop: 100, width: '100%', height: '600px', border: 'none' }}>
+      <div style={{ marginTop: 100, width: '100%', height: '700px', border: 'none' }}>
         <iframe
           src="/webejs/index.html"
           width="100%"
