@@ -2,8 +2,6 @@ export default function Contact() {
     return (
 
         <div>
-            <h2>------</h2>
-
             <h1>Наша команда</h1>
             <div style={{display: "flex", gap: "5%",marginLeft: "8%"}}>
                 <div style={{display: "flex-column"}}>

@@ -20,7 +20,6 @@ export default function MagneticInduction() {
     };
 
     return (<div style={{display: 'flex', flexDirection: 'column', maxHeight: '100%', maxWidth:'100%', alignItems: 'center'}}>
-        <h2>----------------------------</h2>
         <h1>Визуализация магнитного поля</h1>
         <div style={{display: 'flex', padding:'10px'}}>
             <div>
