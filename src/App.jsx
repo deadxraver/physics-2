@@ -1,9 +1,9 @@
 import NavBar from './components/xvost/NavigationBar';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MagneticInduction from "./components/xvost/MagneticInduction";
-import Fluctuations from "./components/xvost/Fluctuations";
-import Contact from "./components/xvost/Contact";
-import StartMenu from "./components/xvost/StartMenu";
+import Fluctuations from "./components/gorb/Fluctuations";
+import Contact from "./components/Contact";
+import StartMenu from "./components/StartMenu";
 
 function App() {
     return (
