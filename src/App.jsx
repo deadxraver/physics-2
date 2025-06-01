@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MagneticInduction from "./components/xvost/MagneticInduction";
 import Contact from "./components/Contact";
 import Main from "./components/introduction/Main";
-import EjsEmbed from "./components/gorb/EjsEmbed";
+import EjsEmbed from "./components/EjsEmbed";
 
 function App() {
     return (
