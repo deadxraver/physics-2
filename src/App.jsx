@@ -8,15 +8,6 @@ import Main from "./components/introduction/Main";
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
-                <img
-                    src="https://avatars.mds.yandex.net/i?id=16492d525376ea328f1c34917b67f3f3_l-8000733-images-thumbs&n=13"
-                    width={640}
-                    height={360}
-                    alt={"всем прив картинка"}>
-                </img>
-
-            </header>
             <BrowserRouter>
                 <NavBar />
                 <Routes>
