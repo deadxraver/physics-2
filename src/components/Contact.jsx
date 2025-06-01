@@ -21,7 +21,7 @@ export default function Contact() {
 
                 <div style={{display: "flex-column"}}>
                     <img src="alena.png" alt="null"/>
-                    <h2 style={{textAlign: "center"}}><a href="https://github.com/dllnnx">алена (беременна)</a></h2>
+                    <h2 style={{textAlign: "center"}}><a href="https://github.com/dllnnx">алёна</a></h2>
                 </div>
 
             </div>
