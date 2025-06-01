@@ -5,7 +5,7 @@ export default function Contact() {
             <h2>------</h2>
 
             <h1>Наша команда</h1>
-            <div style={{display: "flex", gap: "60px",marginLeft: "10%"}}>
+            <div style={{display: "flex", gap: "5%",marginLeft: "8%"}}>
                 <div style={{display: "flex-column"}}>
                     <img src="gera.png" alt="null"/>
                     <h2 style={{textAlign: "center"}}><a href="https://github.com/geruniasun">герардас шне</a></h2>
