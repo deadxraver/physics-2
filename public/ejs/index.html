@@ -92,17 +92,16 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
 
   var font; // Model.Variables.varfrem.font
   var fontb; // Model.Variables.varfrem.fontb
-  var font_family_; // Model.Variables.varfrem.font_family_
 
   function _serialize() { return _model.serialize(); }
 
   _model._userSerialize = function() {
-    return { t : t, x : x, y : y, phi : phi, omega : omega, acc : acc, color : color, xDrag : xDrag, yDrag : yDrag, qGreen : qGreen, qRed : qRed, font : font, fontb : fontb, font_family_ : font_family_ };
+    return { t : t, x : x, y : y, phi : phi, omega : omega, acc : acc, color : color, xDrag : xDrag, yDrag : yDrag, qGreen : qGreen, qRed : qRed, font : font, fontb : fontb };
   }
   function _serializePublic() { return _model.serializePublic(); }
 
   _model._userSerializePublic = function() {
-    return { t : t, x : x, y : y, phi : phi, omega : omega, acc : acc, color : color, xDrag : xDrag, yDrag : yDrag, qGreen : qGreen, qRed : qRed, font : font, fontb : fontb, font_family_ : font_family_ };
+    return { t : t, x : x, y : y, phi : phi, omega : omega, acc : acc, color : color, xDrag : xDrag, yDrag : yDrag, qGreen : qGreen, qRed : qRed, font : font, fontb : fontb };
   }
 
   _model._readParameters = function(json) {
@@ -119,7 +118,6 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
     if(typeof json.qRed != 'undefined') qRed = json.qRed;
     if(typeof json.font != 'undefined') font = json.font;
     if(typeof json.fontb != 'undefined') fontb = json.fontb;
-    if(typeof json.font_family_ != 'undefined') font_family_ = json.font_family_;
   }
 
   _model._readParametersPublic = function(json) {
@@ -136,7 +134,6 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
     if(typeof json.qRed != 'undefined') qRed = json.qRed;
     if(typeof json.font != 'undefined') font = json.font;
     if(typeof json.fontb != 'undefined') fontb = json.fontb;
-    if(typeof json.font_family_ != 'undefined') font_family_ = json.font_family_;
   }
 
   function _unserializePublic(json) { return _model.unserializePublic(json); }
@@ -239,7 +236,6 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
   _model.addToReset(function() { // Reset of varfrem
     font = "monospace normal 2vw "; // Model.Variables.varfrem.font
     fontb = "normal bold 2vw"; // Model.Variables.varfrem.fontb
-    font_family_ = "monospace"; // Model.Variables.varfrem.font_family_
   }); // End of reset of varfrem
 
   if (_inputParameters) {
@@ -538,7 +534,7 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
       var sinDiff=Math.sin(phi[1]-phi[0]); // > Preliminary code for ODE Evol Page - line 1
       var cosDiff=Math.cos(phi[1]-phi[0]); // > Preliminary code for ODE Evol Page - line 2
       var q2=qRed*qGreen; // > Preliminary code for ODE Evol Page - line 3
-      var k=q2*9e-3/.017; // > Preliminary code for ODE Evol Page - line 4
+      var k=q2*9e-3/0.017; // > Preliminary code for ODE Evol Page - line 4
       for (var j=0;j<2;j++){ // > Preliminary code for ODE Evol Page - line 5
         acc[j]=-k*Math.pow(-1,j)*sinDiff/Math.pow(1-cosDiff,1.5)-9.8*Math.cos(phi[j]); // > Preliminary code for ODE Evol Page - line 6
         } // > Preliminary code for ODE Evol Page - line 7
@@ -549,8 +545,6 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
       where the angle is the angle between the two charges // > Preliminary code for ODE Evol Page - line 12
       and r is the length of the pendulum support // > Preliminary code for ODE Evol Page - line 13
       */ // > Preliminary code for ODE Evol Page - line 14
-       // > Preliminary code for ODE Evol Page - line 15
-       // > Preliminary code for ODE Evol Page - line 16
       // Compute the rate
       var __cRate=0;
       var i;
@@ -700,14 +694,14 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       .setProperty("Display","inline-flex")
       ;
     _view._addElement(EJSS_INTERFACE.imageAndTextButton, 'gcharge', _view.executionPanel)
-      .setProperty("Background","#f72cfe")
-      .setProperty("Text","q_1 =  ")
-      .setProperty("Font","normal normal default Georgia, serif")
+      .setProperty("Background","LightGray")
+      .setProperty("Text","q1 =  ")
+      .setProperty("Font","normal normal large Geneva, Verdana, sans-serif")
       ;
     _view._addElement(EJSS_INTERFACE.numberField, 'gCharge', _view.executionPanel)
       .setProperty("Width","10vw")
       .setProperty("Format","0.0")
-      .setProperty("Font","normal normal medium Georgia, serif")
+      .setProperty("Font","normal normal large Geneva, Verdana, sans-serif")
       ;
     _view._addElement(EJSS_INTERFACE.slider, 'greenslider', _view.executionPanel)
       .setProperty("Width","15vw")
@@ -715,20 +709,20 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       .setProperty("Maximum",4)
       .setProperty("ShowText",false)
       .setProperty("Format","0.0")
-      .setProperty("Background","#f72cfe")
+      .setProperty("Background","LightGray")
       .setProperty("Tooltip","Green charge")
       .setProperty("Foreground","white")
       .setProperty("Step",1)
       ;
     _view._addElement(EJSS_INTERFACE.imageAndTextButton, 'gcharge2', _view.executionPanel)
-      .setProperty("Background","#a25dec")
-      .setProperty("Text","q_2 = ")
-      .setProperty("Font","normal normal default Georgia, serif")
+      .setProperty("Background","LightGray")
+      .setProperty("Text","q2 = ")
+      .setProperty("Font","normal normal large Geneva, Verdana, sans-serif")
       ;
     _view._addElement(EJSS_INTERFACE.numberField, 'gCharge2', _view.executionPanel)
       .setProperty("Width","10vw")
       .setProperty("Format","0.0")
-      .setProperty("Font","normal normal medium Georgia, serif")
+      .setProperty("Font","normal normal large Geneva, Verdana, sans-serif")
       ;
     _view._addElement(EJSS_INTERFACE.slider, 'redslider', _view.executionPanel)
       .setProperty("Width","15vw")
@@ -736,7 +730,7 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       .setProperty("Maximum",4)
       .setProperty("ShowText",false)
       .setProperty("Format","0.0")
-      .setProperty("Background","#f72cfe")
+      .setProperty("Background","LightGray")
       .setProperty("Tooltip","Red charge")
       .setProperty("Foreground","white")
       .setProperty("Step",1)
@@ -753,7 +747,7 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       ;
     _view._addElement(EJSS_INTERFACE.panel, 'panel', _view._topFrame);
     _view._addElement(EJSS_DRAWING2D.plottingPanel, 'plottingPanel', _view.panel)
-      .setProperty("Height","88vh")
+      .setProperty("Height","90vh")
       .setProperty("Width","100%")
       .setProperty("Gutters",[0,0,0,0])
       .setProperty("YScalePrecision",0)
@@ -835,6 +829,36 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
   </head>
   <body>
     <div role="button" id="_topFrame" style="text-align:center"></div>
+    <div id='metadata' class='metadata'>
+      <br />
+      <div id='title_author'>
+        <hr />
+        <b>Title and author:</b>
+        <p>
+          Coulomb Pendulum<br/>
+          <img alt='Logo' src='./CoulombPendulum/Screen Shot 2018-05-11 at 5.03.59 PM (2).png'/>
+        </p>
+        <p>
+          <img alt='author image' src='./01authorannecox.png'/>
+          <img alt='author image' src='./01authorlookang50x50.png'/>
+Anne J Cox, Fremont Teng, Loo Kang Wee
+        </p>
+        <hr />
+      </div>
+      <p></p>
+      <div id='copyright_message'>
+        <div class='cc_left'  style='float:left'>
+          &#169;2025, Anne J Cox, Fremont Teng, Loo Kang Wee. <br />
+          Compiled with <a href='https://t.um.es/webejs' target='_blank'>WebEJS : the web version of Easy JavaScript Simulations</a>.<br />
+          Version 1.0 (240505)
+        </div>
+        <div class='cc_right' style='float:right'>
+          Released under a <a rel='license' target='_blank' href='https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US'>
+          <img alt='Creative Commons Attribution-NonCommercial-ShareAlike' src='./_ejs_library/images/cc_icon.png' />
+          </a> license.
+        </div>
+      </div>
+    </div>
     <script type="text/javascript"><!--//--><![CDATA[//><!--
 
       var _model;
