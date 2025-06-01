@@ -3,6 +3,11 @@ import FieldCanvas from './components/xvost/FieldCanvas';
 import Controls from './components/xvost/Controls';
 import PointInfo from './components/xvost/PointInfo';
 import NavBar from './components/xvost/NavigationBar';
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import MagneticInduction from "./components/xvost/MagneticInduction";
+import Fluctuations from "./components/xvost/Fluctuations";
+import Contact from "./components/xvost/Contact";
+import StartMenu from "./components/xvost/StartMenu";
 
 function App() {
     // Начальные значения (примерные)
@@ -29,7 +34,16 @@ function App() {
                 <img
                     src="https://avatars.mds.yandex.net/i?id=16492d525376ea328f1c34917b67f3f3_l-8000733-images-thumbs&n=13"/>
             </header>
-            <NavBar></NavBar>
+            <BrowserRouter>
+                <NavBar />
+                <Routes>
+                    <Route path="/magnetic_induction" element={<MagneticInduction />} />
+                    <Route path="/fluctuations" element={<Fluctuations />} />
+                    <Route path="/contact" element={<Contact />} />
+                    {/* Редирект на главную, если путь не найден */}
+                    <Route path="*" element={<StartMenu />} />
+                </Routes>
+            </BrowserRouter>
 
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <h1>Визуализация магнитного поля</h1>

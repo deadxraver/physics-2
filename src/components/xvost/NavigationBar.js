@@ -1,18 +1,40 @@
 import React from 'react';
 import '../../styles/xvost/nav-bar.css';
-//TODO маппинги поменять))
+import {NavLink} from "react-router-dom";
+
 const NavBar = () => {
     return (
         <nav className="navbar">
             <ul className="navbar__list">
                 <li className="navbar__item">
-                    <a href="/magnetic_induction" className="navbar__link">ПРОЕКТ: ХВОСТ</a>
+                    <NavLink
+                        to="/magnetic_induction"
+                        className={({isActive}) =>
+                            isActive ? "navbar__link active" : "navbar__link"
+                        }
+                    >
+                        ПРОЕКТ: ХВОСТ
+                    </NavLink>
                 </li>
                 <li className="navbar__item">
-                    <a href="/fluctuations" className="navbar__link">ПРОЕКТ: ГОРБЕНКО</a>
+                    <NavLink
+                        to="/fluctuations"
+                        className={({isActive}) =>
+                            isActive ? "navbar__link active" : "navbar__link"
+                        }
+                    >
+                        ПРОЕКТ: ГОРБЕНКО
+                    </NavLink>
                 </li>
                 <li className="navbar__item">
-                    <a href="/contact" className="navbar__link">ЧЕ-ТО ЕЩЕ</a>
+                    <NavLink
+                        to="/contact"
+                        className={({isActive}) =>
+                            isActive ? "navbar__link active" : "navbar__link"
+                        }
+                    >
+                        ЧЕ-ТО ЕЩЕ
+                    </NavLink>
                 </li>
             </ul>
         </nav>
