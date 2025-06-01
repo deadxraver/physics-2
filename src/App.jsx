@@ -4,8 +4,7 @@ import FieldCanvas from './components/xvost/FieldCanvas';
 import Controls from './components/xvost/Controls';
 import PointInfo from './components/xvost/PointInfo';
 import NavBar from './components/xvost/NavigationBar';
-import ElectromagneticFluctuations from './components/ElectromagneticFluctuations';
-import FluctuationsPage from './FluctuationsPage';
+import EjsEmbed from './components/EjsEmbed';
 
 function App() {
     // Начальные значения (примерные)
@@ -36,7 +35,7 @@ function App() {
                 <NavBar />
                 
                 <Routes>
-                    <Route path="/fluctuations" element={<ElectromagneticFluctuations/>} />
+                    <Route path="/fluctuations" element={<EjsEmbed/>} />
                     <Route path="/" element={
                         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                             <h1>Визуализация магнитного поля</h1>

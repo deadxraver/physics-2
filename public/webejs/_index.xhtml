@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="././_ejs_library//favicon_io/favicon.ico" type="image/x-icon" />
+    <link href="./_ejs_library/css/_main.css" rel="stylesheet" />
+
+    <title>Coulomb Pendulum</title>
+  </head>
+  <body>
+    <div id="_ejs_banner">
+      <img src="./_ejs_library/images/webejs_logo.png" alt="WebEJS Logo" />
+      <div id="_ejs_banner-text">Coulomb Pendulum</div>
+      <button onclick="toggleTOC()">
+        <img src="./_ejs_library/images/toc.png" alt="Toggle TOC" />
+      </button>
+    </div> 
+    
+    <div id="_ejs_container">
+      <iframe id="_ejs_toc" src="_toc.xhtml"></iframe>
+      <iframe id="_ejs_content" name="_ejs_content" src="_description_1.html"></iframe>
+    </div>
+
+    <div id="ejs_footer">
+      <a href="https://www.um.es/fem/wikis/webejs/" target="_blank">WebEJS : The web version of Easy JavaScript Simulations</a>,  
+    </div>
+    <script type="text/javascript">
+      function toggleTOC() {
+        const _ejs_toc = document.getElementById('_ejs_toc');
+        const _content = document.getElementById('_ejs_content');
+        if (_ejs_toc.classList.contains('_ejs_hidden')) _ejs_toc.classList.remove('_ejs_hidden');
+        else _ejs_toc.classList.add('_ejs_hidden');
+      }
+    </script>
+  </body>
+</html>
