@@ -1,4 +1,4 @@
-import NavBar from './components/xvost/NavigationBar';
+import NavBar from './components/NavigationBar';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MagneticInduction from "./components/xvost/MagneticInduction";
 import Fluctuations from "./components/gorb/Fluctuations";

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import '../../styles/introduction/main.css';
 
 function Main() {
 	const [openSections, setOpenSections] = useState({
@@ -16,7 +17,7 @@ function Main() {
 		<>
 			<h1>-----------------------------------------------------------------------</h1>
 			<h1>Всем привет с вами команда <b>= НЕЙРОТЕХ =</b> это наш проект по физике</h1>
-			<div>На этой странице представлена информация о двух визуализациях</div>
+
 			<div className="info-panel">
 				{/* Горб */}
 				<div className="section">

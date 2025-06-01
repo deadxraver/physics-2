@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/xvost/nav-bar.css';
+import '../styles/xvost/nav-bar.css';
 import {NavLink} from "react-router-dom";
 
 const NavBar = () => {
