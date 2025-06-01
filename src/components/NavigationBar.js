@@ -8,12 +8,22 @@ const NavBar = () => {
             <ul className="navbar__list">
                 <li className="navbar__item">
                     <NavLink
+                        to="/"
+                        className={({isActive}) =>
+                            isActive ? "navbar__link active" : "navbar__link"
+                        }
+                    >
+                        НА ГЛАВНУЮ
+                    </NavLink>
+                </li>
+                <li className="navbar__item">
+                    <NavLink
                         to="/magnetic_induction"
                         className={({isActive}) =>
                             isActive ? "navbar__link active" : "navbar__link"
                         }
                     >
-                        ПРОЕКТ: ХВОСТ
+                        ПРОЕКТ: ПОЛЯ
                     </NavLink>
                 </li>
                 <li className="navbar__item">
@@ -23,7 +33,7 @@ const NavBar = () => {
                             isActive ? "navbar__link active" : "navbar__link"
                         }
                     >
-                        ПРОЕКТ: ГОРБЕНКО
+                        ПРОЕКТ: ТРЕУГОЛЬНИК
                     </NavLink>
                 </li>
                 <li className="navbar__item">
@@ -33,7 +43,7 @@ const NavBar = () => {
                             isActive ? "navbar__link active" : "navbar__link"
                         }
                     >
-                        ЧЕ-ТО ЕЩЕ
+                        О НАС
                     </NavLink>
                 </li>
             </ul>

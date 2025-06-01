@@ -1,3 +1,8 @@
 export default function Contact() {
-    return <div>Контент для "ЧЕ-ТО ЕЩЕ"</div>;
+    return (
+        <div>
+            <h2>--------------------</h2>
+            <h1>тут будут всякие там наши контакты хз</h1>
+        </div>
+    );
 }

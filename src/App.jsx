@@ -11,11 +11,12 @@ function App() {
             <BrowserRouter>
                 <NavBar />
                 <Routes>
+                    <Route path="/" element={<Main />} />
                     <Route path="/magnetic_induction" element={<MagneticInduction />} />
                     <Route path="/fluctuations" element={<Fluctuations />} />
                     <Route path="/contact" element={<Contact />} />
                     {/* Редирект на главную, если путь не найден */}
-                    <Route path="*" element={<Main />} />
+                    <Route path="*" element={<Main/>} />
                 </Routes>
             </BrowserRouter>
         </div>
