@@ -12,21 +12,14 @@ const PointInfo = ({ pointData }) => {
             <h3 style={{color: '#6A11CBFF'}}>ИНФОРМАЦИЯ О KЛИКЕ:</h3>
 
             <div className="info-row">
-                <span className="info-label">координаты (в пикселях):</span>
-                <span className="info-value">({pointData.x.toFixed(0)}, {pointData.y.toFixed(0)})</span>
-            </div>
-
-            <div className="info-row">
                 <span className="info-label">|B|:</span>
                 <span className="info-value">{pointData.B_magnitude.toExponential(2)} Тл</span>
             </div>
-
             <div className="info-row">
                 <span className="info-label">вектор B:</span> {/* Символ вектора со стрелкой сверху */}
                 <span
                     className="info-value">({pointData.B_x.toExponential(2)} Тл, {pointData.B_y.toExponential(2)} Тл)</span>
             </div>
-
             <div className="info-row">
                 <span className="info-label">использованная μ:</span>
                 <span className="info-value">{pointData.mu.toExponential(2)} Н/А²</span>
