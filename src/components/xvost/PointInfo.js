@@ -2,7 +2,7 @@ import React from 'react';
 
 const PointInfo = ({ pointData }) => {
     if (!pointData) {
-        return <div style={{ padding: '20px', border: '1px solid #ccc', margin: '20px' }}>
+        return <div style={{ width: '600px',height: '240px', padding: '20px', border: '1px solid #ccc'}}>
             <p>Кликните по полю, чтобы узнать значение магнитной индукции.</p>
         </div>;
     }
