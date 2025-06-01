@@ -1,0 +1,80 @@
+.main-container{
+    padding: 20px;
+    border: 1px solid #ccc;
+    display: flex; /* Активируем Flexbox */
+    flex-wrap: wrap; /* Позволяем элементам переноситься на новую строку, если не хватает места */
+    justify-content: center; /* Центрируем слайдеры по горизонтали в контейнере */
+    gap: 20px; /* Добавляем промежуток между слайдерами (и по горизонтали, и по вертикали) */
+    max-width: 600px; /* Ограничиваем максимальную ширину контейнера, чтобы избежать слишком длинных рядов */
+    /*margin: 0 auto; !* Центрируем сам контейнер на странице *!*/
+}
+/* controls.css */
+
+.slider {
+    display: flex;
+    flex-direction: column; /* Элементы в столбце: label, input, span */
+    align-items: center; /* Центрируем по горизонтали */
+    margin-bottom: 30px; /* Отступ снизу для разделения слайдеров */
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 240px; /* Фиксированная ширина для единообразия */
+    box-sizing: border-box; /* Учитываем padding и border в ширине */
+}
+
+.slider label {
+    font-size: 1em;
+    color: #333;
+    margin-bottom: 8px; /* Отступ под текстом метки */
+    text-align: center;
+    font-weight: bold;
+}
+
+.slider input[type="range"] {
+    width: 90%; /* Ширина ползунка относительно контейнера */
+    height: 8px; /* Высота дорожки ползунка */
+    -webkit-appearance: none; /* Убираем стандартные стили Chrome/Safari */
+    appearance: none;
+    background: #e0e0e0; /* Цвет дорожки */
+    outline: none;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Отступ под ползунком */
+}
+
+/* Стилизация "бегунка" (thumb) для Webkit (Chrome, Safari) */
+.slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px; /* Ширина бегунка */
+    height: 20px; /* Высота бегунка */
+    background: #6A11CBFF; /* Цвет бегунка */
+    cursor: grab; /* Курсор при наведении */
+    border-radius: 50%; /* Круглый бегунок */
+    box-shadow: 0 2px 5px rgba(106, 17, 203, 0.43);
+    transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+
+/* Стилизация "бегунка" при активном состоянии (перетаскивании) */
+.slider input[type="range"]::-webkit-slider-thumb:active {
+    background: #5600b1; /* Более темный цвет при активном состоянии */
+    cursor: grabbing; /* Курсор при перетаскивании */
+    box-shadow: 0 3px 6px rgba(106, 17, 203, 0.43);
+}
+
+.slider input[type="range"]::-moz-range-thumb:active {
+    background: #5600b1;
+    cursor: grabbing;
+    box-shadow: 0 3px 6px rgba(106, 17, 203, 0.43);
+}
+
+.slider span {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #5600b1; /* Цвет для отображения значения */
+    min-width: 40px; /* Минимальная ширина для значения, чтобы оно не "прыгало" */
+    text-align: center;
+}

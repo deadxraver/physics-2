@@ -1,0 +1,46 @@
+.click-info {
+    /* Общие стили для контейнера информации */
+    padding: 15px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0,0, 0.1);
+    /* Увеличим ширину; чтобы было место для "пробела" */
+    width: 450px; /* Можно настроить по желанию */
+    margin: 20px auto;
+
+    font-family: Verdana, sans-serif;
+    color: #333;
+}
+.click-info p {
+    font-weight: bold;
+    color: #6A11CBFF;
+}
+
+.click-info h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #eee;
+}
+
+.info-row {
+    display: flex; /* Теперь это Flex-контейнер */
+    justify-content: space-between; /* Разносит элементы по краям */
+    align-items: baseline; /* Выравнивает текст по базовой линии */
+    margin-bottom: 5px;
+    padding: 2px 0; /* Небольшой вертикальный отступ */
+}
+
+.info-label {
+    font-weight: bold;
+    color: #555;
+    white-space: nowrap; /* Гарантирует; что название не перенесется */
+}
+
+.info-value {
+    color: #111;
+    word-break: break-all; /* Разрешаем разрыв длинных чисел */
+    text-align: right; /* Если значение очень длинное и переносится; оно выровняется по правому краю */
+}
