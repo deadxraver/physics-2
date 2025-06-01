@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import '../../styles/introduction/main.css';
+import {NavLink} from "react-router-dom";
 
 function Main() {
 	const [openSections, setOpenSections] = useState({
@@ -36,6 +37,14 @@ function Main() {
 							<p>На концах равнозаряженные частицы, соединены проволоками</p>
 							<p>По сигналу пользователя проволока в основании рвется, и система начинает колебаться</p>
 							<p>Проект визуализирует этот процесс</p>
+							<NavLink
+								to="/fluctuations"
+								className={({ isActive }) =>
+									isActive ? "custom-button active" : "custom-button"
+								}
+							>
+								посмотреть
+							</NavLink>
 						</div>
 					)}
 				</div>
@@ -61,6 +70,14 @@ function Main() {
 								<li>Визуализировать векторы магнитной индукции, образуемые этими проводниками</li>
 								<li>Создать возможность получать ее значение, кликая в рандомную точку</li>
 							</ul>
+							<NavLink
+								to="/magnetic_induction"
+								className={({ isActive }) =>
+									isActive ? "custom-button active" : "custom-button"
+								}
+							>
+								посмотреть
+							</NavLink>
 						</div>
 					)}
 				</div>
