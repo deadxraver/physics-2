@@ -8,20 +8,20 @@ export default function Contact() {
             <div style={{display: "flex", gap: "5%",marginLeft: "8%"}}>
                 <div style={{display: "flex-column"}}>
                     <img src="gera.png" alt="null"/>
-                    <h2 style={{textAlign: "center"}}><a href="https://github.com/geruniasun">герардас шне</a></h2>
+                    <h2 style={{textAlign: "center"}}><a href="https://github.com/geruniasun" target="_blank">герардас шне</a></h2>
                 </div>
                 <div style={{display: "flex-column"}}>
                     <img src="pima.png" alt="null"/>
-                    <h2 style={{textAlign: "center"}}><a href="https://github.com/p11menova">катюха ПИМ</a></h2>
+                    <h2 style={{textAlign: "center"}}><a href="https://github.com/p11menova" target="_blank">катюха ПИМ</a></h2>
                 </div>
                 <div style={{display: "flex-column"}}>
                     <img src="danik.png" alt="null"/>
-                    <h2 style={{textAlign: "center"}}><a href="https://github.com/deadxraver">данёк чими</a></h2>
+                    <h2 style={{textAlign: "center"}}><a href="https://github.com/deadxraver" target="_blank">данёк чими</a></h2>
                 </div>
 
                 <div style={{display: "flex-column"}}>
                     <img src="alena.png" alt="null"/>
-                    <h2 style={{textAlign: "center"}}><a href="https://github.com/dllnnx">алёна</a></h2>
+                    <h2 style={{textAlign: "center"}}><a href="https://github.com/dllnnx" target="_blank">алёна</a></h2>
                 </div>
 
             </div>

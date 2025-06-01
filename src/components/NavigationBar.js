@@ -9,6 +9,7 @@ const NavBar = () => {
                 <li className="navbar__item">
                     <NavLink
                         to={"https://miro.com/app/board/uXjVItoNecU=/?share_link_id=863180669537"}
+                        target="_blank"
                         className={({isActive}) =>
                             isActive ? "navbar__link active" : "navbar__link"
                         }
