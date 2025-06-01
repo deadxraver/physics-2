@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/nav-bar.css';
+import '../../styles/xvost/nav-bar.css';
 //TODO маппинги поменять))
 const NavBar = () => {
     return (
