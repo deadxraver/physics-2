@@ -6,12 +6,12 @@ import {useState} from "react";
 export default function MagneticInduction() {
     // Начальные значения (примерные)
     const mu0 = 4 * Math.PI * 1e-7; // Магнитная постоянная
-    const [h1, setH1] = useState(1); // метры
-    const [h2, setH2] = useState(1); // метры
+    const [h1, setH1] = useState(4); // метры
+    const [h2, setH2] = useState(4); // метры
     const [mu1, setMu1] = useState(mu0); // в вакууме
     const [mu2, setMu2] = useState(500 * mu0); // например, ферромагнетик
     const [I1, setI1] = useState(5); // Амперы, ток "на нас"
-    const [I2, setI2] = useState(-5); // Амперы, ток "от нас" (отрицательное значение для обратного направления)
+    const [I2, setI2] = useState(5); // Амперы, ток "от нас" (отрицательное значение для обратного направления)
 
     const [selectedPointData, setSelectedPointData] = useState(null);
 

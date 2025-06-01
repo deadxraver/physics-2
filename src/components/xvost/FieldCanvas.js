@@ -31,7 +31,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
             ctx.moveTo(0, dielectricY);
             ctx.lineTo(canvas.width, dielectricY);
             ctx.stroke();
-            ctx.font = '16px Roboto'; // Установка шрифта
+            ctx.font = 'bold 14px Verdana'; // Установка шрифта
             ctx.fillStyle = '#6A11CBFF'; // Цвет текста
             ctx.fillText(`μ1`, 10, dielectricY - 10);
             ctx.fillText(`μ2`, 10, dielectricY + 20);
@@ -43,14 +43,10 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
             ctx.arc(conductor1X, conductor1Y, 8, 0, Math.PI * 2); // Кружок
             ctx.stroke();
             // Крестик
+            ctx.fillStyle = '#ff0000'; // Цвет точки
             ctx.beginPath();
-            ctx.moveTo(conductor1X - 5, conductor1Y - 5);
-            ctx.lineTo(conductor1X + 5, conductor1Y + 5);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(conductor1X + 5, conductor1Y - 5);
-            ctx.lineTo(conductor1X - 5, conductor1Y + 5);
-            ctx.stroke();
+            ctx.arc(conductor1X, conductor1Y, 3, 0, Math.PI * 2); // Точка
+            ctx.fill();
             ctx.fillStyle = '#6A11CBFF'; // Цвет текста
             ctx.fillText(`I1: ${I1}A (на нас)`, conductor1X + 15, conductor1Y - 5);
 
@@ -60,11 +56,15 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
             ctx.beginPath();
             ctx.arc(conductor2X, conductor2Y, 8, 0, Math.PI * 2); // Кружок
             ctx.stroke();
-            // Точка в центре
-            ctx.fillStyle = '#ff0000'; // Цвет точки
             ctx.beginPath();
-            ctx.arc(conductor2X, conductor2Y, 3, 0, Math.PI * 2); // Точка
-            ctx.fill();
+            ctx.moveTo(conductor2X - 5, conductor2Y - 5);
+            ctx.lineTo(conductor2X + 5, conductor2Y + 5);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(conductor2X + 5, conductor2Y - 5);
+            ctx.lineTo(conductor2X - 5, conductor2Y + 5);
+            ctx.stroke();
+
             ctx.fillStyle = '#6A11CBFF'; // Цвет текста
             ctx.fillText(`I2: ${I2}A (от нас)`, conductor2X + 15, conductor2Y - 5);
 
