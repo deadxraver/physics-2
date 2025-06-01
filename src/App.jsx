@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FieldCanvas from './components/FieldCanvas';
 import Controls from './components/Controls';
 import PointInfo from './components/PointInfo';
+import NavBar from './components/NavigationBar';
 
 function App() {
 	// Начальные значения (примерные)
@@ -28,6 +29,7 @@ function App() {
 				<img
 					src="https://avatars.mds.yandex.net/i?id=16492d525376ea328f1c34917b67f3f3_l-8000733-images-thumbs&n=13"/>
 			</header>
+			<NavBar></NavBar>
 
 	<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 		<h1>Визуализация магнитного поля</h1>
