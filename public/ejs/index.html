@@ -40,7 +40,7 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
     showOkDialog : EJSS_INTERFACE.BoxPanel.showOkDialog,
     showOkCancelDialog : EJSS_INTERFACE.BoxPanel.showOkCancelDialog,
     downloadText: EJSS_TOOLS.File.downloadText,
-    uploadText: function(action) { EJSS_TOOLS.File.uploadText(_model,action); } 
+    uploadText: function(action) { EJSS_TOOLS.File.uploadText(_model,action); }
   };
 
   function _play()  { _isPaused = false; _isPlaying = true;  _model.play();  }
@@ -558,7 +558,7 @@ function _simulation (_topFrame, _libraryPath, _codebasePath, _inputParameters) 
 
 
     __odeSelf._addEvent = function(userCondition,userAction,eventType,eventMethod,maxIter,eventTolerance,endAtEvent) {
-    
+
       var __User_Event = function (userCondition,userAction,eventType,eventMethod,maxIter,eventTolerance,endAtEvent) {
         var _eventSelf = {};
         _eventSelf.getTypeOfEvent = function() { return eventType; }
@@ -747,7 +747,7 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       ;
     _view._addElement(EJSS_INTERFACE.panel, 'panel', _view._topFrame);
     _view._addElement(EJSS_DRAWING2D.plottingPanel, 'plottingPanel', _view.panel)
-      .setProperty("Height","90vh")
+      .setProperty("Height","100vh")
       .setProperty("Width","100%")
       .setProperty("Gutters",[0,0,0,0])
       .setProperty("YScalePrecision",0)
@@ -759,8 +759,8 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       .setProperty("YFixedTick",0)
       .setProperty("YAutoTicks",false)
       .setProperty("MinimumX",-1)
-      .setProperty("XTickStep",1)
-      .setProperty("MinimumY",-1)
+      .setProperty("XTickStep",0.5)
+      .setProperty("MinimumY",-1.5)
       .setProperty("YTickStep",1)
       .setProperty("AutoScaleY",false)
       .setProperty("AutoScaleX",false)
@@ -769,8 +769,8 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       ;
     _view._addElement(EJSS_DRAWING2D.group, 'axisgroup', _view.plottingPanel);
     _view._addElement(EJSS_DRAWING2D.segment, 'xAxis', _view.axisgroup)
-      .setProperty("SizeX",2)
-      .setProperty("X",-1)
+      .setProperty("SizeX",6)
+      .setProperty("X",-3)
       .setProperty("LineColor","#0080ff")
       .setProperty("Y",0)
       .setProperty("SizeY",0)
@@ -780,8 +780,8 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
       .setProperty("SizeX",0)
       .setProperty("X",0)
       .setProperty("LineColor","#0080ff")
-      .setProperty("Y",-1)
-      .setProperty("SizeY",2)
+      .setProperty("Y",-1.5)
+      .setProperty("SizeY",3)
       .setProperty("LineWidth",2)
       ;
     _view._addElement(EJSS_DRAWING2D.shape, 'supportPoint', _view.plottingPanel)
@@ -831,33 +831,8 @@ function _simulationView (_topFrame,_libraryPath,_codebasePath) {
     <div role="button" id="_topFrame" style="text-align:center"></div>
     <div id='metadata' class='metadata'>
       <br />
-      <div id='title_author'>
-        <hr />
-        <b>Title and author:</b>
-        <p>
-          Coulomb Pendulum<br/>
-          <img alt='Logo' src='./CoulombPendulum/Screen Shot 2018-05-11 at 5.03.59 PM (2).png'/>
-        </p>
-        <p>
-          <img alt='author image' src='./01authorannecox.png'/>
-          <img alt='author image' src='./01authorlookang50x50.png'/>
-Anne J Cox, Fremont Teng, Loo Kang Wee
-        </p>
-        <hr />
-      </div>
       <p></p>
-      <div id='copyright_message'>
-        <div class='cc_left'  style='float:left'>
-          &#169;2025, Anne J Cox, Fremont Teng, Loo Kang Wee. <br />
-          Compiled with <a href='https://t.um.es/webejs' target='_blank'>WebEJS : the web version of Easy JavaScript Simulations</a>.<br />
-          Version 1.0 (240505)
-        </div>
-        <div class='cc_right' style='float:right'>
-          Released under a <a rel='license' target='_blank' href='https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US'>
-          <img alt='Creative Commons Attribution-NonCommercial-ShareAlike' src='./_ejs_library/images/cc_icon.png' />
-          </a> license.
-        </div>
-      </div>
+
     </div>
     <script type="text/javascript"><!--//--><![CDATA[//><!--
 
