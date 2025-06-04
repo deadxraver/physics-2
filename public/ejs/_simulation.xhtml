@@ -266,31 +266,6 @@
                 }
             }
 
-            function toggleFullScreen() {
-                if (!document.fullscreenElement &amp;&amp;
-                    !document.mozFullScreenElement &amp;&amp; !document.webkitFullscreenElement &amp;&amp; !document.msFullscreenElement) {
-                    if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen();
-                    } else if (document.documentElement.msRequestFullscreen) {
-                        document.documentElement.msRequestFullscreen();
-                    } else if (document.documentElement.mozRequestFullScreen) {
-                        document.documentElement.mozRequestFullScreen();
-                    } else if (document.documentElement.webkitRequestFullscreen) {
-                        document.documentElement.webkitRequestFullscreen();
-                    }
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.msExitFullscreen) {
-                        document.msExitFullscreen();
-                    } else if (document.mozCancelFullScreen) {
-                        document.mozCancelFullScreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    }
-                }
-            }
-
             _model.addToInitialization(function () {
                 if (!__pagesEnabled['Init Page']) return;
                 phi[0] = -1;
@@ -373,7 +348,6 @@
                 var __eventSolver;
                 var __solverClass = _getEngineSolverClass('RungeKuttaFehlberg');
                 var __state = [];
-                var __ignoreErrors = false;
                 var __mustInitialize = true;
                 var __isEnabled = true;
                 var __mustUserReinitialize = false;
@@ -470,14 +444,6 @@
                 }
 
                 __odeSelf.automaticResetSolver = function () {
-                    __mustReinitialize = true;
-                }
-
-                function __errorAction() {
-                    if (__ignoreErrors) return;
-                    console.log(__eventSolver.getErrorMessage());
-                    if (window.confirm('Numerical solver error. Continue the simulation?')) __ignoreErrors = true;
-                    else _pause();
                     __mustReinitialize = true;
                 }
 
@@ -670,9 +636,7 @@
                     });
                     _view.playPauseButton.setAction('OnClick', _play);
                     _view.resetButton.setAction('OnClick', _reset);
-                    _view.plottingPanel.setAction('OnDoubleClick', function (_data, _info) {
-                        toggleFullScreen();
-                    });
+
                     _view.chargeSet.linkProperty('FillColor', function () {
                         return color;
                     }, function (_v) {
