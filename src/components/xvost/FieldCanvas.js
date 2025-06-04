@@ -69,51 +69,27 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
 
             // ===== вектора =====
             const gridSize = 40;
-            ctx.strokeStyle = '#9a8faa';
-            ctx.lineWidth = 1;
+            //ctx.strokeStyle = '#9a8faa';
+            //ctx.lineWidth = 1;
 
             for (let x = gridSize / 2; x < canvas.width; x += gridSize) {
                 for (let y = gridSize / 2; y < canvas.height; y += gridSize) {
                     const currentMu = y < borderY ? mu1 : mu2;
 
-                    let B1x = 0, B1y = 0;
-                    const r1 = Math.sqrt((x - conductor1X) ** 2 + (y - conductor1Y) ** 2) / scale;
-                    if (r1 > 0.01) { // чтоб на 0 не делить (это вредно)
-                        const B_magnitude1 = (currentMu * I1) / (2 * Math.PI * r1);
-                        B1x = B_magnitude1 * (y - conductor1Y) / (r1 * scale);
-                        B1y = -B_magnitude1 * (x - conductor1X) / (r1 * scale);
-                    }
-
-                    let B2x = 0, B2y = 0;
-                    const r2 = Math.sqrt((x - conductor2X) ** 2 + (y - conductor2Y) ** 2) / scale;
-                    if (r2 > 0.01) { // чтоб на 0 не делить (это вредно)
-                        const B_magnitude2 = (currentMu * I2) / (2 * Math.PI * r2);
-                        B2x = -B_magnitude2 * (y - conductor2Y) / (r2 * scale);
-                        B2y = B_magnitude2 * (x - conductor2X) / (r2 * scale);
-                    }
+                    const { Bx: B1x, By: B1y } = calculateBField(x, y,
+                        conductor1X, conductor1Y, I1, currentMu, scale, 1);
+                    const { Bx: B2x, By: B2y } = calculateBField(x, y,
+                        conductor2X, conductor2Y, I2, currentMu, scale, -1);
 
                     const B_totalX = B1x + B2x;
                     const B_totalY = B1y + B2y;
-                    const B_total_magnitude = Math.sqrt(B_totalX ** 2 + B_totalY ** 2);
+                    const magnitude = Math.hypot(B_totalX, B_totalY); // типо длина
+                    const lenCof = Math.min(1e5, gridSize / (2 * magnitude));
+                    const pLen = Math.max(4, 0.5 * lenCof * magnitude); // длина наконечника
+                    const endX = x + B_totalX * lenCof;
+                    const endY = y + B_totalY * lenCof;
 
-                    const arrowLength = Math.min(gridSize / 2, B_total_magnitude * 1e5); // чтоб красиво
-                    const angle = Math.atan2(B_totalY, B_totalX);
-
-                    ctx.save();
-                    ctx.translate(x, y);
-                    ctx.rotate(angle);
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(arrowLength, 0);
-                    ctx.stroke();
-                    // наконечник
-                    ctx.beginPath();
-                    ctx.moveTo(arrowLength, 0);
-                    ctx.lineTo(arrowLength - 5, -3);
-                    ctx.moveTo(arrowLength, 0);
-                    ctx.lineTo(arrowLength - 5, 3);
-                    ctx.stroke();
-                    ctx.restore();
+                    drawArrow(ctx, x, y, endX, endY, '#9a8faa', 1, pLen);
                 }
             }
 
@@ -150,30 +126,21 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         const mouseX = event.clientX - rect.left;
         const mouseY = event.clientY - rect.top;
 
-        const mu = mouseY < borderY ? mu1 : mu2; // проницаемость там куда кликнули
+        const mu = mouseY < borderY ? mu1 : mu2; // мю там куда кликнули
 
-        const r1 = Math.sqrt((mouseX - conductor1X) ** 2 + (mouseY - conductor1Y) ** 2) / scale;
-        let B1x_phys = 0, B1y_phys = 0;
-        if (r1 > 0.01) {
-            const B_magnitude1 = (mu * I1) / (2 * Math.PI * r1);
-            B1x_phys = B_magnitude1 * (mouseY - conductor1Y) / (r1 * scale);
-            B1y_phys = -B_magnitude1 * (mouseX - conductor1X) / (r1 * scale);
-        }
-
-        const r2 = Math.sqrt((mouseX - conductor2X) ** 2 + (mouseY - conductor2Y) ** 2) / scale;
-        let B2x_phys = 0, B2y_phys = 0;
-        if (r2 > 0.01) {
-            const B_magnitude2 = (mu * I2) / (2 * Math.PI * r2);
-            B2x_phys = -B_magnitude2 * (mouseY - conductor2Y) / (r2 * scale);
-            B2y_phys = B_magnitude2 * (mouseX - conductor2X) / (r2 * scale);
-        }
+        const { Bx: B1x_phys, By: B1y_phys } = calculateBField(mouseX, mouseY,
+            conductor1X, conductor1Y, I1, mu, scale, 1);
+        const { Bx: B2x_phys, By: B2y_phys } = calculateBField(mouseX, mouseY,
+            conductor2X, conductor2Y, I2, mu, scale, -1);
 
         const B_totalX_phys = B1x_phys + B2x_phys;
         const B_totalY_phys = B1y_phys + B2y_phys;
-        const B_total_magnitude = Math.sqrt(B_totalX_phys ** 2 + B_totalY_phys ** 2);
+        const B_total_magnitude = Math.hypot(B_totalX_phys, B_totalY_phys);
 
         // обновляем состояние
         setClickedPointData({
+            x: mouseX,
+            y: mouseY,
             B_magnitude: B_total_magnitude,
             B_x: B_totalX_phys,
             B_y: B_totalY_phys,
@@ -193,16 +160,30 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         });
     };
 
+    function calculateBField(x, y, conductorX, conductorY, I, currentMu, scale, direction = 1) {
+        const dx = x - conductorX;
+        const dy = y - conductorY;
+        const r = Math.hypot(dx, dy) / scale;
+
+        if (r <= 0.01) return { Bx: 0, By: 0 };
+
+        const B_magnitude = (currentMu * I) / (2 * Math.PI * r);
+        const Bx = direction * B_magnitude * dy / (r * scale);
+        const By = -direction * B_magnitude * dx / (r * scale);
+
+        return { Bx, By };
+    }
+
     function drawVector(ctx, x, y, vecX, vecY, scale, color, label,
                         lineWidth = 2, font = 'bold 12px Verdana') {
-        drawArrow(ctx, x, y, x + vecX * scale, y + vecY * scale, color, lineWidth);
+        drawArrow(ctx, x, y, x + vecX * scale, y + vecY * scale, color, lineWidth, 10);
         ctx.fillStyle = color;
         ctx.font = font;
         ctx.fillText(label, x + vecX * scale + 5, y + vecY * scale - 5);
     }
 
 
-    const drawArrow = (ctx, startX, startY, endX, endY, color, lineWidth = 2) => {
+    const drawArrow = (ctx, startX, startY, endX, endY, color = '#9a8faa', lineWidth = 2, pointerLen) => {
         ctx.strokeStyle = color;
         ctx.lineWidth = lineWidth;
         ctx.beginPath();
@@ -211,7 +192,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         ctx.stroke();
 
         // наконечник
-        const pointer = 10; // длина наконечника
+        const pointer = pointerLen; // длина наконечника
         const angle = Math.atan2(endY - startY, endX - startX);
         ctx.beginPath();
         ctx.moveTo(endX, endY);
