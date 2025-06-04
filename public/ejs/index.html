@@ -473,8 +473,8 @@
 
                 function __arraysChanged() {
                     if (_phiLength !== phi.length) return true;
-                    if (_omegaLength !== omega.length) return true;
-                    return false;
+                    return _omegaLength !== omega.length;
+
                 }
 
                 __odeSelf.getEventSolver = function () {
@@ -529,7 +529,7 @@
                         if (__eventSolver.getErrorCode() !== EJSS_ODE_SOLVERS.ERROR.NO_ERROR) __errorAction();
                     }
                     var __stepTaken = __takeMaximumStep ? __eventSolver.maxStep() : __eventSolver.step();
-                    var __i = 0;
+                    var __i;
                     var __cOut = 0;
                     for (__i = 0; __i < _phiLength; __i++) {
                         phi[__i] = __state[__cOut++];
@@ -546,7 +546,7 @@
 
                 __odeSelf.getRate = function (_aState, _aRate) {
                     _aRate[_aRate.length - 1] = 0.0;
-                    var __i = 0;
+                    var __i;
                     var __cOut = 0;
                     var phi = [];
                     var omega = [];
@@ -554,7 +554,6 @@
                         phi[__i] = _aState[__cOut++];
                         omega[__i] = _aState[__cOut++];
                     }
-                    var t = _aState[__cOut++];
                     var sinDiff = Math.sin(phi[1] - phi[0]);
                     var cosDiff = Math.cos(phi[1] - phi[0]);
                     var q2 = qRed * qGreen;
@@ -595,7 +594,7 @@
                         }
 
                         _eventSelf.evaluate = function (_aState) {
-                            var __i = 0;
+                            var __i;
                             var __cOut = 0;
                             var phi = [];
                             var omega = [];
@@ -603,12 +602,11 @@
                                 phi[__i] = _aState[__cOut++];
                                 omega[__i] = _aState[__cOut++];
                             }
-                            var t = _aState[__cOut++];
                             return eval(userCondition);
                         }
 
                         _eventSelf.action = function () {
-                            var __i = 0;
+                            var __i;
                             var __cOut = 0;
                             for (__i = 0; __i < _phiLength; __i++) {
                                 phi[__i] = __state[__cOut++];
@@ -616,7 +614,7 @@
                             }
                             t = __state[__cOut++];
                             var _returnValue = __userDefinedAction();
-                            var __j = 0;
+                            var __j;
                             var __cIn = 0;
                             for (__j = 0; __j < _phiLength; __j++) {
                                 __state[__cIn++] = phi[__j];
@@ -627,7 +625,7 @@
                         }
 
                         function __userDefinedAction() {
-                            if (undefined != functions) eval(functions.toString());
+                            if (undefined !== functions) eval(functions.toString());
                             eval(userAction);
                             return endAtEvent;
                         }
