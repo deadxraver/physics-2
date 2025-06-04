@@ -18,7 +18,6 @@ function App() {
                     <Route path="/magnetic_induction" element={<MagneticInduction />} />
                     <Route path="/fluctuations" element={<EjsEmbed />} />
                     <Route path="/contact" element={<Contact />} />
-                    {/* Редирект на главную, если путь не найден */}
                     <Route path="*" element={<Main/>} />
                 </Routes>
             </BrowserRouter>
