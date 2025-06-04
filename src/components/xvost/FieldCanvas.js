@@ -22,43 +22,39 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         const ctx = canvas.getContext('2d');
 
         const drawField = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // ластиком прошлись
 
-            // Рисуем диэлектрик
-            ctx.strokeStyle = '#0080ff'; // Цвет диэлектрика
+            // ===== граница сред =====
+            ctx.strokeStyle = '#0080ff';
             ctx.lineWidth = 2.5;
             ctx.beginPath();
             ctx.moveTo(0, borderY);
             ctx.lineTo(canvas.width, borderY);
             ctx.stroke();
-            ctx.font = 'bold 14px Verdana'; // Установка шрифта
-            ctx.fillStyle = '#6A11CBFF'; // Цвет текста
+            ctx.font = 'bold 14px Verdana';
+            ctx.fillStyle = '#6A11CBFF'; // цвет текста
             ctx.fillText(`μ1`, 10, borderY - 10);
             ctx.fillText(`μ2`, 10, borderY + 20);
 
-            // --- Рисуем проводник 1 (кружок с точкой для тока "на нас") ---
-            // В физике "на нас" обычно точка, "от нас" - крестик.
-            // Здесь реализовано по вашему запросу: I1 (на нас) -> точка, I2 (от нас) -> крестик.
-            ctx.strokeStyle = '#ff0000'; // Цвет обводки
-            ctx.lineWidth = 1.5; // Толщина линии
+            // ===== первый проводник (на нас) =====
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth = 1.5;
             ctx.beginPath();
-            ctx.arc(conductor1X, conductor1Y, 8, 0, Math.PI * 2); // Кружок
+            ctx.arc(conductor1X, conductor1Y, 8, 0, Math.PI * 2);
             ctx.stroke();
-            // Точка в центре
-            ctx.fillStyle = '#ff0000'; // Цвет точки
+            ctx.fillStyle = '#ff0000';
             ctx.beginPath();
-            ctx.arc(conductor1X, conductor1Y, 3, 0, Math.PI * 2); // Точка
+            ctx.arc(conductor1X, conductor1Y, 3, 0, Math.PI * 2);
             ctx.fill();
-            ctx.fillStyle = '#6A11CBFF'; // Цвет текста
+            ctx.fillStyle = '#6A11CBFF';
             ctx.fillText(`I1: ${I1}A (на нас)`, conductor1X + 15, conductor1Y - 5);
 
-            // --- Рисуем проводник 2 (кружок с крестиком для тока "от нас") ---
-            ctx.strokeStyle = '#ff0000'; // Цвет обводки
-            ctx.lineWidth = 1.5; // Толщина линии
+            // ===== второй проводник (от нас) =====
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth = 1.5;
             ctx.beginPath();
-            ctx.arc(conductor2X, conductor2Y, 8, 0, Math.PI * 2); // Кружок
+            ctx.arc(conductor2X, conductor2Y, 8, 0, Math.PI * 2);
             ctx.stroke();
-            // Крестик
             ctx.beginPath();
             ctx.moveTo(conductor2X - 5, conductor2Y - 5);
             ctx.lineTo(conductor2X + 5, conductor2Y + 5);
@@ -67,13 +63,13 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
             ctx.moveTo(conductor2X + 5, conductor2Y - 5);
             ctx.lineTo(conductor2X - 5, conductor2Y + 5);
             ctx.stroke();
-            ctx.fillStyle = '#6A11CBFF'; // Цвет текста
+            ctx.fillStyle = '#6A11CBFF';
             ctx.fillText(`I2: ${I2}A (от нас)`, conductor2X + 15, conductor2Y - 5);
 
 
-            // Рисуем векторы поля на сетке
-            const gridSize = 40; // Размер сетки для векторов
-            ctx.strokeStyle = '#9a8faa'; // Цвет векторов
+            // ===== вектора =====
+            const gridSize = 40;
+            ctx.strokeStyle = '#9a8faa';
             ctx.lineWidth = 1;
 
             for (let x = gridSize / 2; x < canvas.width; x += gridSize) {
@@ -82,7 +78,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
 
                     let B1x = 0, B1y = 0;
                     const r1 = Math.sqrt((x - conductor1X) ** 2 + (y - conductor1Y) ** 2) / scale;
-                    if (r1 > 0.01) {
+                    if (r1 > 0.01) { // чтоб на 0 не делить (это вредно)
                         const B_magnitude1 = (currentMu * I1) / (2 * Math.PI * r1);
                         B1x = B_magnitude1 * (y - conductor1Y) / (r1 * scale);
                         B1y = -B_magnitude1 * (x - conductor1X) / (r1 * scale);
@@ -90,7 +86,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
 
                     let B2x = 0, B2y = 0;
                     const r2 = Math.sqrt((x - conductor2X) ** 2 + (y - conductor2Y) ** 2) / scale;
-                    if (r2 > 0.01) {
+                    if (r2 > 0.01) { // чтоб на 0 не делить (это вредно)
                         const B_magnitude2 = (currentMu * I2) / (2 * Math.PI * r2);
                         B2x = -B_magnitude2 * (y - conductor2Y) / (r2 * scale);
                         B2y = B_magnitude2 * (x - conductor2X) / (r2 * scale);
@@ -100,7 +96,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
                     const B_totalY = B1y + B2y;
                     const B_total_magnitude = Math.sqrt(B_totalX ** 2 + B_totalY ** 2);
 
-                    const arrowLength = Math.min(gridSize / 2, B_total_magnitude * 1e5); // Масштабируем для визуализации
+                    const arrowLength = Math.min(gridSize / 2, B_total_magnitude * 1e5); // чтоб красиво
                     const angle = Math.atan2(B_totalY, B_totalX);
 
                     ctx.save();
@@ -110,7 +106,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
                     ctx.moveTo(0, 0);
                     ctx.lineTo(arrowLength, 0);
                     ctx.stroke();
-                    // Нарисовать наконечник стрелки
+                    // наконечник
                     ctx.beginPath();
                     ctx.moveTo(arrowLength, 0);
                     ctx.lineTo(arrowLength - 5, -3);
@@ -121,44 +117,26 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
                 }
             }
 
-            // --- Рисуем векторы B1, B2 и B_total в кликнутой точке ---
+            // ===== вектора B, B1, B2 =====
             if (clickedPointData) {
                 const { x, y, B1x_phys, B1y_phys, B2x_phys, B2y_phys, B_totalX_phys, B_totalY_phys } = clickedPointData;
 
-                // Масштабирование векторов для отображения на канвасе
-                const vectorDisplayScale = 1e5 * scale * 0.05; // Подбираем коэффициент для наглядности
+                // чтоб красиво выглядело
+                const vectorDisplayScale = 1e5 * scale * 0.05;
 
-                // Рисуем кружок в кликнутой точке
+                // кружок
                 ctx.fillStyle = 'red';
                 ctx.beginPath();
                 ctx.arc(x, y, 5, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Рисуем B1 (например, синий)
-                const B1_endX = x + B1x_phys * vectorDisplayScale;
-                const B1_endY = y + B1y_phys * vectorDisplayScale;
-                drawArrow(ctx, x, y, B1_endX, B1_endY, 'blue', 2);
-                ctx.fillStyle = 'blue';
-                ctx.font = 'bold 12px Verdana';
-                ctx.fillText('B1', B1_endX + 5, B1_endY - 5);
-
-
-                // Рисуем B2 (например, малиновый)
-                const B2_endX = x + B2x_phys * vectorDisplayScale;
-                const B2_endY = y + B2y_phys * vectorDisplayScale;
-                drawArrow(ctx, x, y, B2_endX, B2_endY, 'deeppink', 2);
-                ctx.fillStyle = 'deeppink';
-                ctx.font = 'bold 12px Verdana';
-                ctx.fillText('B2', B2_endX + 5, B2_endY - 5);
-
-
-                // Рисуем B_total (например, фиолетовый)
-                const B_total_endX = x + B_totalX_phys * vectorDisplayScale;
-                const B_total_endY = y + B_totalY_phys * vectorDisplayScale;
-                drawArrow(ctx, x, y, B_total_endX, B_total_endY, '#6A11CBFF', 3);
-                ctx.fillStyle = '#6A11CBFF';
-                ctx.font = 'bold 14px Verdana';
-                ctx.fillText('B', B_total_endX + 5, B_total_endY - 5);
+                // B1
+                drawVector(ctx, x, y, B1x_phys, B1y_phys, vectorDisplayScale, 'blue', 'B1');
+                // B2
+                drawVector(ctx, x, y, B2x_phys, B2y_phys, vectorDisplayScale, 'deeppink', 'B2');
+                // B
+                drawVector(ctx, x, y, B_totalX_phys, B_totalY_phys, vectorDisplayScale,
+                    '#6A11CBFF', 'B',3,'bold 14px Verdana');
             }
         };
 
@@ -172,11 +150,10 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         const mouseX = event.clientX - rect.left;
         const mouseY = event.clientY - rect.top;
 
-        // Вычисляем поле в точке mouseX, mouseY
-        const mu = mouseY < borderY ? mu1 : mu2; // Проницаемость среды в точке клика
+        const mu = mouseY < borderY ? mu1 : mu2; // проницаемость там куда кликнули
 
         const r1 = Math.sqrt((mouseX - conductor1X) ** 2 + (mouseY - conductor1Y) ** 2) / scale;
-        let B1x_phys = 0, B1y_phys = 0; // Физические компоненты B1
+        let B1x_phys = 0, B1y_phys = 0;
         if (r1 > 0.01) {
             const B_magnitude1 = (mu * I1) / (2 * Math.PI * r1);
             B1x_phys = B_magnitude1 * (mouseY - conductor1Y) / (r1 * scale);
@@ -184,31 +161,28 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         }
 
         const r2 = Math.sqrt((mouseX - conductor2X) ** 2 + (mouseY - conductor2Y) ** 2) / scale;
-        let B2x_phys = 0, B2y_phys = 0; // Физические компоненты B2
+        let B2x_phys = 0, B2y_phys = 0;
         if (r2 > 0.01) {
             const B_magnitude2 = (mu * I2) / (2 * Math.PI * r2);
             B2x_phys = -B_magnitude2 * (mouseY - conductor2Y) / (r2 * scale);
             B2y_phys = B_magnitude2 * (mouseX - conductor2X) / (r2 * scale);
         }
 
-        const B_totalX_phys = B1x_phys + B2x_phys; // Физические компоненты B_total
+        const B_totalX_phys = B1x_phys + B2x_phys;
         const B_totalY_phys = B1y_phys + B2y_phys;
         const B_total_magnitude = Math.sqrt(B_totalX_phys ** 2 + B_totalY_phys ** 2);
 
-        // Обновляем состояние с данными кликнутой точки
+        // обновляем состояние
         setClickedPointData({
-            x: mouseX,
-            y: mouseY,
             B_magnitude: B_total_magnitude,
-            B_x: B_totalX_phys, // Передаем физические компоненты для onPointClick
+            B_x: B_totalX_phys,
             B_y: B_totalY_phys,
             mu: mu,
-            B1x_phys, B1y_phys, // Добавляем компоненты B1 для рисования
-            B2x_phys, B2y_phys, // Добавляем компоненты B2 для рисования
-            B_totalX_phys, B_totalY_phys // Добавляем компоненты B_total для рисования
+            B1x_phys, B1y_phys,
+            B2x_phys, B2y_phys,
+            B_totalX_phys, B_totalY_phys
         });
 
-        // Вызываем внешний обработчик клика
         onPointClick({
             x: mouseX,
             y: mouseY,
@@ -218,6 +192,14 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
             mu: mu,
         });
     };
+
+    function drawVector(ctx, x, y, vecX, vecY, scale, color, label,
+                        lineWidth = 2, font = 'bold 12px Verdana') {
+        drawArrow(ctx, x, y, x + vecX * scale, y + vecY * scale, color, lineWidth);
+        ctx.fillStyle = color;
+        ctx.font = font;
+        ctx.fillText(label, x + vecX * scale + 5, y + vecY * scale - 5);
+    }
 
 
     const drawArrow = (ctx, startX, startY, endX, endY, color, lineWidth = 2) => {
