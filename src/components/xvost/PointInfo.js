@@ -16,7 +16,7 @@ const PointInfo = ({ pointData }) => {
                 <span className="info-value">{pointData.B_magnitude.toExponential(2)} Тл</span>
             </div>
             <div className="info-row">
-                <span className="info-label">вектор B:</span> {/* Символ вектора со стрелкой сверху */}
+                <span className="info-label">вектор B:</span>
                 <span
                     className="info-value">({pointData.B_x.toExponential(2)} Тл, {pointData.B_y.toExponential(2)} Тл)</span>
             </div>

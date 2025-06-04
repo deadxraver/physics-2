@@ -1,6 +1,5 @@
 export default function Contact() {
     return (
-
         <div>
             <h1>Наша команда</h1>
             <div style={{display: "flex", gap: "5%",marginLeft: "8%"}}>

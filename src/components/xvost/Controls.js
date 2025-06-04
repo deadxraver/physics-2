@@ -17,12 +17,12 @@ const Controls = ({ h1, setH1, h2, setH2, mu1, setMu1, mu2, setMu2, I1, setI1, I
             <div className="slider">
                 <label>μ1:</label>
                 <input  type="range" min="1" max="1000" step="1" value={mu1 / (4 * Math.PI * 1e-7)} onChange={(e) => setMu1(parseFloat(e.target.value) * (4 * Math.PI * 1e-7))} />
-                <span>{(mu1 / (4 * Math.PI * 1e-7)).toFixed(0)} Н/А² * 1e-7</span>
+                <span>{(mu1 / (4 * Math.PI * 1e-7)).toFixed(0)}</span>
             </div>
             <div className="slider">
                 <label>μ2:</label>
                 <input type="range" min="1" max="1000" step="1" value={mu2 / (4 * Math.PI * 1e-7)} onChange={(e) => setMu2(parseFloat(e.target.value) * (4 * Math.PI * 1e-7))} />
-                <span>{(mu2 / (4 * Math.PI * 1e-7)).toFixed(0)} Н/А² * 1e-7</span>
+                <span>{(mu2 / (4 * Math.PI * 1e-7)).toFixed(0)}</span>
             </div>
             <div className="slider">
                 <label>I1:</label>
