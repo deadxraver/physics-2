@@ -1,48 +1,20 @@
-import React, { useRef, useEffect, useState } from 'react'; // Импортируем useState
+import React, { useRef, useEffect, useState } from 'react';
 
 const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
     const canvasRef = useRef(null);
-    const scale = 50; // Например, 50 пикселей на 1 метр
+    const scale = 50; // масштабчик
 
-    // Состояние для хранения данных о последней кликнутой точке
-    const [clickedPointData, setClickedPointData] = useState(null);
+    const [clickedPointData, setClickedPointData] = useState(null); // последний клик
 
-    // Определяем положение диэлектрика по Y
-    const dielectricY = 375; // Допустим, на 300 пикселей сверху от начала канваса
+    const canvasWidth = 1000;
+    const canvasHeight = 750;
+    const borderY = canvasHeight / 2; // граница сред
 
-    // Положения проводников (в пикселях относительно канваса)
-    // Эти значения будут зависеть от h1, h2 и масштаба
-    // Пусть проводник 1 находится над диэлектриком, проводник 2 под
-    const conductor1X = 500;
-    const conductor1Y = dielectricY - h1 * scale;
+    const conductor1X = canvasWidth / 2;
+    const conductor1Y = borderY - h1 * scale;
 
-    const conductor2X = 500;
-    const conductor2Y = dielectricY + h2 * scale;
-
-    // Вспомогательная функция для рисования стрелок
-    const drawArrow = (ctx, startX, startY, endX, endY, color, lineWidth = 2) => {
-        ctx.strokeStyle = color;
-        ctx.lineWidth = lineWidth;
-        ctx.beginPath();
-        ctx.moveTo(startX, startY);
-        ctx.lineTo(endX, endY);
-        ctx.stroke();
-
-        // Нарисовать наконечник стрелки
-        const headlen = 10; // Длина наконечника стрелки
-        const angle = Math.atan2(endY - startY, endX - startX);
-        ctx.beginPath();
-        ctx.moveTo(endX, endY);
-        ctx.lineTo(endX - headlen * Math.cos(angle - Math.PI / 6), endY - headlen * Math.sin(angle - Math.PI / 6));
-        ctx.moveTo(endX, endY);
-        ctx.lineTo(endX - headlen * Math.cos(angle + Math.PI / 6), endY - headlen * Math.sin(angle + Math.PI / 6));
-        ctx.stroke();
-    };
-
-    // Новый useEffect для сброса данных клика при изменении параметров слайдеров
-    useEffect(() => {
-        setClickedPointData(null); // Сбрасываем данные о клике
-    }, [h1, h2, mu1, mu2, I1, I2]); // Зависимости: любые изменения параметров слайдеров
+    const conductor2X = canvasWidth / 2;
+    const conductor2Y = borderY + h2 * scale;
 
 
     useEffect(() => {
@@ -56,13 +28,13 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
             ctx.strokeStyle = '#0080ff'; // Цвет диэлектрика
             ctx.lineWidth = 2.5;
             ctx.beginPath();
-            ctx.moveTo(0, dielectricY);
-            ctx.lineTo(canvas.width, dielectricY);
+            ctx.moveTo(0, borderY);
+            ctx.lineTo(canvas.width, borderY);
             ctx.stroke();
             ctx.font = 'bold 14px Verdana'; // Установка шрифта
             ctx.fillStyle = '#6A11CBFF'; // Цвет текста
-            ctx.fillText(`μ1`, 10, dielectricY - 10);
-            ctx.fillText(`μ2`, 10, dielectricY + 20);
+            ctx.fillText(`μ1`, 10, borderY - 10);
+            ctx.fillText(`μ2`, 10, borderY + 20);
 
             // --- Рисуем проводник 1 (кружок с точкой для тока "на нас") ---
             // В физике "на нас" обычно точка, "от нас" - крестик.
@@ -106,7 +78,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
 
             for (let x = gridSize / 2; x < canvas.width; x += gridSize) {
                 for (let y = gridSize / 2; y < canvas.height; y += gridSize) {
-                    const currentMu = y < dielectricY ? mu1 : mu2;
+                    const currentMu = y < borderY ? mu1 : mu2;
 
                     let B1x = 0, B1y = 0;
                     const r1 = Math.sqrt((x - conductor1X) ** 2 + (y - conductor1Y) ** 2) / scale;
@@ -191,7 +163,8 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         };
 
         drawField();
-    }, [h1, h2, mu1, mu2, I1, I2, dielectricY, conductor1X, conductor1Y, conductor2X, conductor2Y, clickedPointData]); // Добавляем clickedPointData в зависимости
+    }, [h1, h2, mu1, mu2, I1, I2, borderY, conductor1X, conductor1Y, conductor2X, conductor2Y, clickedPointData]);
+
 
     const handleClick = (event) => {
         const canvas = canvasRef.current;
@@ -200,7 +173,7 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         const mouseY = event.clientY - rect.top;
 
         // Вычисляем поле в точке mouseX, mouseY
-        const mu = mouseY < dielectricY ? mu1 : mu2; // Проницаемость среды в точке клика
+        const mu = mouseY < borderY ? mu1 : mu2; // Проницаемость среды в точке клика
 
         const r1 = Math.sqrt((mouseX - conductor1X) ** 2 + (mouseY - conductor1Y) ** 2) / scale;
         let B1x_phys = 0, B1y_phys = 0; // Физические компоненты B1
@@ -246,12 +219,40 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         });
     };
 
+
+    const drawArrow = (ctx, startX, startY, endX, endY, color, lineWidth = 2) => {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth;
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+
+        // наконечник
+        const pointer = 10; // длина наконечника
+        const angle = Math.atan2(endY - startY, endX - startX);
+        ctx.beginPath();
+        ctx.moveTo(endX, endY);
+        ctx.lineTo(endX - pointer * Math.cos(angle - Math.PI / 6),
+            endY - pointer * Math.sin(angle - Math.PI / 6));
+        ctx.moveTo(endX, endY);
+        ctx.lineTo(endX - pointer * Math.cos(angle + Math.PI / 6),
+            endY - pointer * Math.sin(angle + Math.PI / 6));
+        ctx.stroke();
+    };
+
+
+    // сброс информации о клике при движении слайдеров
+    useEffect(() => {
+        setClickedPointData(null);
+    }, [h1, h2, mu1, mu2, I1, I2]); // на все слайдеры
+
     return (
         <canvas
             ref={canvasRef}
-            width={1000}
-            height={750}
-            style={{ border: '1px solid black' }} // Бордер оставил черным для видимости канваса
+            width={canvasWidth}
+            height={canvasHeight}
+            style={{ border: '1px solid black' }}
             onClick={handleClick}
         />
     );
