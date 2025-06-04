@@ -74,15 +74,27 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
 
             for (let x = gridSize / 2; x < canvas.width; x += gridSize) {
                 for (let y = gridSize / 2; y < canvas.height; y += gridSize) {
-                    const currentMu = y < borderY ? mu1 : mu2;
 
-                    const { Bx: B1x, By: B1y } = calculateBField(x, y,
-                        conductor1X, conductor1Y, I1, currentMu, scale, 1);
-                    const { Bx: B2x, By: B2y } = calculateBField(x, y,
-                        conductor2X, conductor2Y, I2, currentMu, scale, -1);
+                    let B1, B2;
 
-                    const B_totalX = B1x + B2x;
-                    const B_totalY = B1y + B2y;
+                    if (y > borderY) {
+                        B1 = calculateBField(x, y, conductor1X, conductor1Y, I1, mu1, scale, 1);
+                    } else if (y < borderY) {
+                        B1 = calculateMirrored(x, y, conductor1X, conductor1Y, I1, mu2, scale, 1);
+                    } else {
+                        B1 = { Bx: 0, By: 0 };
+                    }
+
+                    if (y < borderY) {
+                        B2 = calculateBField(x, y, conductor2X, conductor2Y, I2, mu2, scale, -1);
+                    } else if (y > borderY) {
+                        B2 = calculateMirrored(x, y, conductor2X, conductor2Y, I2, mu1, scale, -1);
+                    } else {
+                        B2 = { Bx: 0, By: 0 };
+                    }
+
+                    const B_totalX = B1.Bx + B2.Bx;
+                    const B_totalY = B1.By + B2.By;
                     const magnitude = Math.hypot(B_totalX, B_totalY); // типо длина
                     const lenCof = Math.min(1e5, gridSize / (2 * magnitude));
                     const pLen = Math.max(4, 0.5 * lenCof * magnitude); // длина наконечника
@@ -160,16 +172,27 @@ const FieldCanvas = ({ h1, h2, mu1, mu2, I1, I2, onPointClick }) => {
         });
     };
 
-    function calculateBField(x, y, conductorX, conductorY, I, currentMu, scale, direction = 1) {
-        const dx = x - conductorX;
-        const dy = y - conductorY;
-        const r = Math.hypot(dx, dy) / scale;
+    function calculateMirrored(x, y, conductorX, conductorY, I, mu, scale, direction = 1) {
+        const k = conductorY > borderY // проверяем где источник
+            ? (mu2 - mu1) / (mu2 + mu1)
+            : (mu1 - mu2) / (mu1 + mu2);
 
-        if (r <= 0.01) return { Bx: 0, By: 0 };
+        const mirroredY = 2 * borderY - conductorY;
+        const imageI = k * I;
 
-        const B_magnitude = (currentMu * I) / (2 * Math.PI * r);
-        const Bx = direction * B_magnitude * dy / (r * scale);
-        const By = -direction * B_magnitude * dx / (r * scale);
+        return calculateBField(x, y, conductorX, mirroredY, imageI, mu, scale, direction);
+    }
+
+    function calculateBField(x, y, conductorX, conductorY, I, mu, scale, direction = 1) {
+        const dx = (x - conductorX) / scale;
+        const dy = (y - conductorY) / scale;
+        const r = Math.hypot(dx, dy);
+
+        if (r < 0.01) return { Bx: 0, By: 0 };
+
+        const B_magnitude = (mu * I) / (2 * Math.PI * r);
+        const Bx = direction * B_magnitude * (-dy / r);
+        const By = direction * B_magnitude * (dx / r);
 
         return { Bx, By };
     }
