@@ -545,7 +545,7 @@
                     var sinDiff = Math.sin(phi[1] - phi[0]);
                     var cosDiff = Math.cos(phi[1] - phi[0]);
                     var q2 = qRed * qGreen;
-                    var k = q2 * 9e-3 / 0.017;
+                    var k = q2 * 9e-3 / 0.017; // сила Кулона
                     for (var j = 0; j < 2; j++) {
                         acc[j] = -k * Math.pow(-1, j) * sinDiff / Math.pow(1 - cosDiff, 1.5) - 9.8 * Math.cos(phi[j]);
                     }

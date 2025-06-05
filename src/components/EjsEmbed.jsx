@@ -13,6 +13,7 @@ const EjsEmbed = () => {
           title="EJS Embed"
         ></iframe>
       </div>
+            <h2 style={{ margin: '50px', color: 'red'}}> заряды указаны в Кулонах!</h2>
         </div>
     );
   };
